@@ -32,11 +32,18 @@ function(u, doc = htmlParse(u))
 person =
 function(u, doc = htmlParse(u), person = "Program Chair")
 {
-    ans = xpathSApply(doc, sprintf("//h3[contains(., '%s')]/following-sibling::div[1]//h3", person), xmlValue)
+#    ans = xpathSApply(doc, sprintf("//h3[contains(., '%s')]/following-sibling::div[1]//h3", person), xmlValue)
+    #    ans = getNodeSet(doc, sprintf("//h3[contains(., '%s')]/following-sibling::div[1]//h3", person))
+    ans = getNodeSet(doc, sprintf("//h3[contains(., '%s')]/following-sibling::*", person))    
+
+    i = which(sapply(ans, xmlName) == "h3")
+    if(length(i))
+        ans = ans[seq(1, length = i[1] - 1)]
+    
     if(length(ans) == 0)
-        NA
+        structure(NA, names = NA)
     else
-        ans
+        structure(sapply(ans, function(x) xpathSApply(x, ".//h3", xmlValue)), names = gsub("^mailto:", "", sapply(ans, function(x) getNodeSet(x, ".//h3//a[starts-with(@href, 'mailto:')]/@href"))))
 }
 
 

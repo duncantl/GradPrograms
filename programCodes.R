@@ -19,7 +19,7 @@ u.progs = getRelativeURL(progs, u)
 
 
 # Download the pages locally for each program.
-filenames = sprintf("Cache/%s.html", basename(u.progs))
+filenames = sprintf("Cache2/%s.html", basename(u.progs))
 names(filenames) = names(u.progs)
 mapply(download.file, u.progs, filenames)
 
