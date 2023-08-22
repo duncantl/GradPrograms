@@ -17,20 +17,20 @@ function(u, doc = htmlParse(u))
 
 
 chair =
-function(u, doc = htmlParse(u))
+function(u, doc = htmlParse(u), ...)
 {
     #  xpathSApply(doc, "//h3[contains(., 'Program Chair')]/following-sibling::div[1]//h3", xmlValue)
-   person(doc = doc)
+   person(doc = doc, ...)
 }
 
 coordinator = 
-function(u, doc = htmlParse(u))
+function(u, doc = htmlParse(u), ...)
 {
-  person(doc = doc, person = "Graduate Program Coordinator")
+  person(doc = doc, person = "Graduate Program Coordinator", ...)
 }
 
 person =
-function(u, doc = htmlParse(u), person = "Program Chair")
+function(u, person = "Program Chair", doc = htmlParse(u), asDataFrame = FALSE)
 {
 #    ans = xpathSApply(doc, sprintf("//h3[contains(., '%s')]/following-sibling::div[1]//h3", person), xmlValue)
     #    ans = getNodeSet(doc, sprintf("//h3[contains(., '%s')]/following-sibling::div[1]//h3", person))
@@ -42,8 +42,19 @@ function(u, doc = htmlParse(u), person = "Program Chair")
     
     if(length(ans) == 0)
         structure(NA, names = NA)
-    else
-        structure(sapply(ans, function(x) xpathSApply(x, ".//h3", xmlValue)), names = gsub("^mailto:", "", sapply(ans, function(x) getNodeSet(x, ".//h3//a[starts-with(@href, 'mailto:')]/@href"))))
+    else {
+
+      tmp = structure(sapply(ans, function(x) xpathSApply(x, ".//h3", xmlValue)), names = gsub("^mailto:", "", sapply(ans, function(x) getNodeSet(x, ".//a[starts-with(@href, 'mailto:') and contains(@href, '@')]/@href"))))
+
+      if(!asDataFrame)
+          return(tmp)
+
+      role = unlist(lapply(ans, function(x) xpathSApply(x, ".//b", xmlValue)))
+      if(length(role) == 0)
+          role = rep(person, length(tmp))
+      data.frame(name = tmp, mail = names(tmp), role = role,
+                 stringsAsFactors = FALSE, row.names = NULL)
+    }
 }
 
 
@@ -62,6 +73,47 @@ function(u, doc = htmlParse(u))
          })
 
     name = xpathSApply(doc, "//h1[contains(@class, 'page-title__title')]", xmlValue)
-    data.frame(name = name, type = type, dean = ii[[1]], code = ii[[2]],
-               chair = chair(doc = doc), coordinator = coordinator(doc = doc))
+    data.frame(name = name, type = type, dean = if(length(ii[[1]])) ii[[1]] else NA, code = ii[[2]],
+               chair = paste(chair(doc = doc), collapse = ", "),
+               coordinator = paste(coordinator(doc = doc), collapse = ", "), row.names = NULL)
+}
+
+
+
+getDEPrograms =
+function(u, doc = htmlParse(u))
+{
+  unname(gsub("/programs/", "", unlist(getNodeSet(doc, "//div[contains(@class, 'programs')]//a/@href"))))
+}
+
+
+getDegReqURL =
+function(u, doc = htmlParse(getURLContent(u)))
+{
+    xpathSApply(doc, "//div[contains(@class, 'gs-program-degree-req')]//a/@href")
+}
+
+getDegRequirements =    
+function(u, to, doc = htmlParse(getURLContent(u)))
+{
+    dr = getDegReqURL(doc = doc)
+    if(length(dr) < 1)
+        return(NA)
+    download.file(dr[1], to)
+    dr[1]
+}
+
+
+getDegreesOffered =
+function(u, doc = htmlParse(u))
+{
+   trimws(xpathSApply(doc, "//h3[contains(., 'Degrees Offered')]/following-sibling::div[1]//div[starts-with(@class, 'field__item ')]", xmlValue))
+}
+
+
+
+admissionDate =
+function(u, doc = htmlParse(u))
+{
+    xpathSApply(doc, "//div[contains(@class, 'field--name-field-admission-deadlines')]//div[@class = 'field__item']", xmlValue)
 }
