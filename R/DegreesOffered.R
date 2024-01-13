@@ -1,3 +1,4 @@
+# See degrees() in funs.R
 degreesOffered =
 function(majorCode = "gcsi",
          u = sprintf("https://grad.ucdavis.edu/programs/%s", tolower(majorCode)),
