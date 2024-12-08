@@ -16,7 +16,7 @@ function(doc, exists, fixes)
 
 
     ans = data.frame(pageNum = pageNums, url = href0, trailingParen = endParen)
-    browser()
+#    browser()
     ans$newURL = fixes[ans$url]    
     if(any(endParen))
         ans$newURL[endParen] = unname( fixes[ href[endParen ] ] )

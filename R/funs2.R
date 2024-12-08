@@ -85,6 +85,9 @@ function(u, doc = htmlParse(u), asDataFrame = FALSE)
 getDegReqLink =
 function(doc, all = FALSE)    
 {
+    if(is.character(doc))
+        doc = htmlParse(doc)
+    
     nodes = getNodeSet(doc, "//div[contains(@class, 'field--name-field-degree-requirements')]//a")
     if(length(nodes) == 0)
        return( character() )
@@ -94,4 +97,17 @@ function(doc, all = FALSE)
         ans
     else
         ans[1]
+}
+
+getBylawsLink =
+function(doc)
+{
+    if(is.character(doc))
+        doc = htmlParse(doc)
+    
+    by = getNodeSet(doc, "//div[contains(@class, 'field--name-field-administrative-bylaws')]//a")
+    if(length(by) == 0)
+        return(NA)
+    
+    structure(xmlGetAttr(by[[1]], "href"), names = xmlValue(by[[1]]))
 }
