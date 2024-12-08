@@ -1,5 +1,9 @@
 library(RCurl)
 library(XML)
+
+#source("../R/funs.R")
+library(GradPrograms)
+
 url = "https://grad.sf.ucdavis.edu/graduate-programs"
 url = "https://grad.ucdavis.edu/programs"
 
@@ -17,16 +21,15 @@ dir = format(Sys.Date(), "%b_%d_%y")
 if(!file.exists(dir))
     dir.create(dir)
 
-mapply(download.file, prog.urls, file.path(dir, sprintf("%s.html", prog.code)))
-
-
+st = mapply(download.file, prog.urls, file.path(dir, sprintf("%s.html", prog.code)))
 
 ff = list.files(dir, full = TRUE)
-source("funs.R")
+names(ff) = gsub("\\.html$", "", basename(ff))
+
+
 ldean = structure(lapply(ff, leadDean), names = gsub("\\.html$", "", basename(ff)))
 
 
-names(ff) = gsub("\\.html$", "", basename(ff))
 byl = lapply(ff, bylawsDates)
 deg = lapply(ff, degReqDates)
 
