@@ -13,12 +13,14 @@ hasExt = grepl('\\.[a-z]{1,5}$', ll)
 ext = rep(".html", length(ll))
 ext[hasExt] = gsub('.*(\\.[a-z]{1,5})$', "\\1", ll[hasExt])
 
-files = file.path("PolicyDocs", paste0( gsub("[ /]", "_", names(ll)), ext))
+docDir = "PolicyDocs2"
+
+files = file.path(docDir, paste0( gsub("[ /]", "_", names(ll)), ext))
 mapply(download.file, ll, files)
 
 all(file.exists(files))
 
-pdfs = list.files("PolicyDocs", pattern = "\\.pdf$", full.name = TRUE)
+pdfs = list.files(docDir, pattern = "\\.pdf$", full.name = TRUE)
 length(pdfs) == sum(ext == ".pdf")
 setdiff(basename(files[ext == ".pdf"]),  basename(pdfs))
 
@@ -29,9 +31,10 @@ files[duplicated(files)]
 
 
 # Create the XML files from the PDF
-system("cd PolicyDocs; for f in *.pdf ; do echo "$f" ; pdftohtml -xml "$f" ; done")
 
-ff = list.files("PolicyDocs", pattern = "\\.(xml|pdf)$")
+system('cd PolicyDocs; for f in *.pdf ; do echo "$f" ; pdftohtml -xml "$f" ; done')
+
+ff = list.files(docDir, pattern = "\\.(xml|pdf)$")
 g = split( ff, gsub("\\.(xml|pdf)$", "", ff))
 w = sapply(g, length) != 2
 stopifnot(!any(w))
