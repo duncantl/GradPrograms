@@ -4,4 +4,4 @@ u = "https://prm.gs.ucdavis.edu/api/app/eDocs/group/%s/member?cacheBuster=161910
 
 # sprint
 
-#c("Assistant Professor",
+# c("Assistant Professor", "ASSOC PROF-AY", "ASSOC PROF-AY-B/E/E")
