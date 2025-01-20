@@ -3,6 +3,9 @@ library(GradPrograms)
 # getDegReqLink(, TRUE)
 # getBylawsLink()
 
+
+library(GradPrograms)
+
 dir = "~/OGS/ScrapeWeb/GradPrograms/Aug_27_24/"
 
 gprogs = list.files(dir, full = TRUE, pattern = "\\.html$")
