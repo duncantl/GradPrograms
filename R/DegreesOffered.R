@@ -1,13 +1,4 @@
-# See degrees() in funs.R
-degreesOffered =
-function(majorCode = "gcsi",
-         u = sprintf("https://grad.ucdavis.edu/programs/%s", tolower(majorCode)),
-         txt = getURLContent(u), doc = htmlParse(txt))
-{
-  xpathSApply(doc, "//h3[. = 'Degrees Offered']/following-sibling::div[1]/div/div[contains(@class, 'field__item')]", xmlValue)
-}
-
-
+# Make into a function ???
 if(FALSE) {
     p = readRDS("Programs.rds")
     do = lapply(basename(p), degreesOffered)
