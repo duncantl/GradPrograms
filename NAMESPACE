@@ -2,5 +2,77 @@ import(XML)
 import(RCurl)
 import(RJSONIO)
 
-exportPattern(".*")
+export(
+    programURLs,
+    programCodes
+)
 
+#  old page format.
+# code from funs.R rather than funs2.R
+#    appDates
+#    degreesOffered 
+#     typeInfo,
+# coordinator, chair, person in funs.R
+#    getDegReqURL in funs.R
+#     getDegreesOffered,
+
+# empty result for GHIS
+# 
+
+
+# empty function
+#    getDEInfo, # empty
+
+export(    
+
+    # √
+    admissionDate, # in funs.R not funs2.R
+
+    # √
+    dean,
+    leadDean,
+    chair,
+    coordinator,
+    gpc,
+    # person, don't export
+
+    containsGRE,
+
+    # √
+    getDegRequirements,
+    getBylawsLink,
+    getDegReqLink,
+
+    # √
+    degrees,
+    webSite,
+    
+    # √
+    degReqDates,   
+    bylawsDates,
+
+
+    # √
+    progCode,    
+    progName, 
+    progType,
+
+    # This is a PRM query. Check.
+    rolesByEmail    
+
+
+    # Do we show DEs anymore. Don't think so.
+    # getDEPrograms
+)
+
+if(FALSE) {
+    export(
+        nullToNA,
+        mkEndDate,
+        getGRENodes,
+        mkDocLinkReport,
+        getPara,
+        getPara2,
+        getFieldItems
+    )
+}
