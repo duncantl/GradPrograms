@@ -24,6 +24,8 @@ admissionDate =
 function(u, doc = htmlParse(u))
 {
     v = xpathSApply(doc, "//div[contains(@class, 'field--name-field-admission-deadlines')]//div[@class = 'field__item']/text()", xmlValue)
+    if(length(v) == 0)
+        return(structure(numeric(), class = "Date"))
 
     v = trimws(v)
     els = strsplit(v, ": *")
