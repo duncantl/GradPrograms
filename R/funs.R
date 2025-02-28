@@ -1,3 +1,41 @@
+getDEInfo =
+function(u, doc = htmlParse(u))
+{
+  
+}
+
+
+# Repurposed this to call getDegReqLink rather than URL
+# XXX enhance to allow all = TRUE and then put year on the name.
+# Handle 2 in the same year.
+getDegRequirements =    
+function(u, to, doc = htmlParse(getURLContent(u)))
+{
+    dr = getDegReqLink(doc = doc)
+    if(length(dr) < 1)
+        return(NA)
+    download.file(dr[1], to)
+    dr[1]
+}
+
+
+# For SiteFarm format
+admissionDate =
+function(u, doc = htmlParse(u))
+{
+    v = xpathSApply(doc, "//div[contains(@class, 'field--name-field-admission-deadlines')]//div[@class = 'field__item']/text()", xmlValue)
+
+    v = trimws(v)
+    els = strsplit(v, ": *")
+    structure(as.Date(sapply(els, `[`, 2), "%b %d, %Y"),
+              names = sapply(els, `[`, 1))
+}
+
+
+if(FALSE) {
+
+    # For the old HTML page format
+
 
 getDocYears =
 function(u, doc = htmlParse(u))
@@ -8,14 +46,7 @@ function(u, doc = htmlParse(u))
                bylaws = if(length(bylaws) == 0) NA else as.integer(bylaws))
 }
 
-
-getDEInfo =
-function(u, doc = htmlParse(u))
-{
-  
-}
-
-
+    
 chair =
 function(u, doc = htmlParse(u), ...)
 {
@@ -79,7 +110,6 @@ function(u, doc = htmlParse(u))
 }
 
 
-
 getDEPrograms =
 function(u, doc = htmlParse(u))
 {
@@ -93,32 +123,12 @@ function(u, doc = htmlParse(getURLContent(u)))
     xpathSApply(doc, "//div[contains(@class, 'gs-program-degree-req')]//a/@href")
 }
 
-getDegRequirements =    
-function(u, to, doc = htmlParse(getURLContent(u)))
-{
-    dr = getDegReqURL(doc = doc)
-    if(length(dr) < 1)
-        return(NA)
-    download.file(dr[1], to)
-    dr[1]
-}
-
-
 getDegreesOffered =
 function(u, doc = htmlParse(u))
 {
    trimws(xpathSApply(doc, "//h3[contains(., 'Degrees Offered')]/following-sibling::div[1]//div[starts-with(@class, 'field__item ')]", xmlValue))
 }
+    
 
-
-
-admissionDate =
-function(u, doc = htmlParse(u))
-{
-    v = xpathSApply(doc, "//div[contains(@class, 'field--name-field-admission-deadlines')]//div[@class = 'field__item']/text()", xmlValue)
-
-    v = trimws(v)
-    els = strsplit(v, ": *")
-    structure(as.Date(sapply(els, `[`, 2), "%b %d, %Y"),
-              names = sapply(els, `[`, 1))
-}
+    
+} # if(FALSE)
