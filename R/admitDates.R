@@ -1,5 +1,6 @@
-library(XML)
-
+# For the old page format, before SiteFarm.
+# XXX Remove this file from git.
+# 
 appDates =
 function(f, doc = htmlParse(f))
 {
