@@ -115,5 +115,10 @@ function(u, doc = htmlParse(u))
 admissionDate =
 function(u, doc = htmlParse(u))
 {
-    xpathSApply(doc, "//div[contains(@class, 'field--name-field-admission-deadlines')]//div[@class = 'field__item']", xmlValue)
+    v = xpathSApply(doc, "//div[contains(@class, 'field--name-field-admission-deadlines')]//div[@class = 'field__item']/text()", xmlValue)
+
+    v = trimws(v)
+    els = strsplit(v, ": *")
+    structure(as.Date(sapply(els, `[`, 2), "%b %d, %Y"),
+              names = sapply(els, `[`, 1))
 }
