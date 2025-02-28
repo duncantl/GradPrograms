@@ -12,7 +12,7 @@ function(u, field, doc = htmlParse(u), asDataFrame = FALSE)
 }
 
 
-coordinator =
+coordinator = gpc =
 function(u, person = "Program Chair", doc = htmlParse(u), asDataFrame = FALSE)
 {
     tmp = person(u, 'field--name-field-grad-pro-coordinator', doc, asDataFrame)
@@ -28,7 +28,7 @@ function(u, person = "Program Chair", doc = htmlParse(u), asDataFrame = FALSE)
 
 
 
-dean =
+dean = leadDean =
 function(u, doc = htmlParse(u), asDataFrame = FALSE)
 {
     xpathSApply(doc, "//div[contains(@class, 'field--name-field-lead-dean')]//div[@class='field__item']", xmlValue)
@@ -77,10 +77,6 @@ function(u, doc = htmlParse(u), asDataFrame = FALSE)
     xp = "//h1[@class = 'page-title']"
     unname(xpathSApply(doc, xp, xmlValue, trim = TRUE))
 }
-
-
-
-
 
 getDegReqLink =
 function(doc, all = FALSE)    

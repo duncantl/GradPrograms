@@ -21,9 +21,9 @@ function(f, doc = readPDFXML(f))
 }
 
 if(FALSE) {
-x = list.files(pattern = "xml$")
-hasGRE = sapply(x, containsGRE)
-names(hasGRE) = gsub("\\.xml", "", basename(x))
-table(hasGRE)
-names(hasGRE)[!hasGRE]
+    x = list.files(pattern = "xml$")
+    hasGRE = sapply(x, containsGRE)
+    names(hasGRE) = gsub("\\.xml", "", basename(x))
+    table(hasGRE)
+    names(hasGRE)[!hasGRE]
 }
