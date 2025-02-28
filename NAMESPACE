@@ -7,19 +7,6 @@ export(
     programCodes
 )
 
-#  old page format.
-# code from funs.R rather than funs2.R
-#    appDates
-#    degreesOffered 
-#     typeInfo,
-# coordinator, chair, person in funs.R
-#    getDegReqURL in funs.R
-#     getDegreesOffered,
-
-# empty result for GHIS
-# 
-
-
 # empty function
 #    getDEInfo, # empty
 
