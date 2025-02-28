@@ -52,6 +52,8 @@ export(
     # getDEPrograms
 )
 
+export(fetchProgramPages)
+
 if(FALSE) {
     export(
         nullToNA,
