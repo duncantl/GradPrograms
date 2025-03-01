@@ -9,13 +9,16 @@ function(u, doc = htmlParse(u))
 # XXX enhance to allow all = TRUE and then put year on the name.
 # Handle 2 in the same year.
 getDegRequirements =    
-function(u, to, doc = htmlParse(getURLContent(u)))
+function(u, to = paste0(tempfile(), ".pdf"), doc = htmlParse(u), ...) # getURLContent(u)
 {
     dr = getDegReqLink(doc = doc)
     if(length(dr) < 1)
         return(NA)
-    download.file(dr[1], to)
-    dr[1]
+    if(is.na(to))
+        return(getURLContent(dr[1], binary = TRUE))
+    
+    download.file(dr[1], to, ...)
+    to # dr[1]
 }
 
 
