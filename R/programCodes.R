@@ -14,8 +14,11 @@ function(url = GSProgURL)
 }
 
 programURLs = 
-function(codes = programCodes(url), url = GSProgURL)
+function(codes = programCodes(url), url = GSProgURL, asDF = FALSE)
 {
-    structure( getRelativeURL(paste0("/programs/", tolower(codes)), url),
-               names = names(codes))
+    u = getRelativeURL(paste0("/programs/", tolower(codes)), url)
+    if(!asDF)
+        return(structure(u, names = names(codes)))
+
+    data.frame(code = codes, name = names(codes), url = u, row.names = codes)
 }
