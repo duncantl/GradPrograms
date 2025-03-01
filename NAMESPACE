@@ -1,6 +1,7 @@
 import(XML)
 import(RCurl)
 import(RJSONIO)
+importFrom("utils", "download.file")
 
 export(
     programURLs,
@@ -22,6 +23,7 @@ export(
     coordinator,
     gpc,
     # person, don't export
+    # What about advisors - rolesByEmail?
 
     containsGRE,
 
