@@ -22,3 +22,10 @@ function(codes = programCodes(url), url = GSProgURL, asDF = FALSE)
 
     data.frame(code = codes, name = names(codes), url = u, row.names = codes)
 }
+
+
+progWebsite =
+function(u, doc = htmlParse(u))
+{
+    xpathSApply(doc, "//div[contains(@class, 'gs-program-website')]/a/@href")
+}
