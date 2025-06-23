@@ -5,7 +5,8 @@ importFrom("utils", "download.file")
 
 export(
     programURLs,
-    programCodes
+    programCodes,
+    deCodes
 )
 
 # empty function
@@ -35,6 +36,7 @@ export(
     # √
     degrees,
     webSite,
+    progWebsite,
     
     # √
     degReqDates,   
