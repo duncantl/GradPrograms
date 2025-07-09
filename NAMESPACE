@@ -6,7 +6,8 @@ importFrom("utils", "download.file")
 export(
     programURLs,
     programCodes,
-    deCodes
+    deCodes,
+    gcertCodes
 )
 
 # empty function
